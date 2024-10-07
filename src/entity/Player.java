@@ -37,6 +37,7 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+
         try {
 
             up_idle = ImageIO.read(getClass().getResourceAsStream("/player/player_up_idle.png"));
@@ -60,9 +61,15 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.upPressed == true || keyH.downPressed == true ||
-                keyH.leftPressed == true || keyH.rightPressed == true) {
+        boolean moving = keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed;
 
+        if (moving) {
+
+            if (spriteNum == 3) {
+                spriteNum = 1; // reset sprite if it was in an up/down idle frame
+            }
+
+            // Update direction
             if (keyH.upPressed) {
                 worldY -= speed;
                 direction = "up";
@@ -86,6 +93,12 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
+        } else { // for handling idle animations
+            if (direction.equalsIgnoreCase("up") || direction.equalsIgnoreCase("down")) {
+                spriteNum = 3;
+            } else {
+                spriteNum = 1; // left or right
+            }
         }
     }
 
@@ -104,6 +117,10 @@ public class Player extends Entity {
                     image = up2;
                 }
 
+                if (spriteNum == 3) {
+                    image = up_idle;
+                }
+
                 break;
             case "down":
 
@@ -113,6 +130,10 @@ public class Player extends Entity {
 
                 if (spriteNum == 2) {
                     image = down2;
+                }
+
+                if (spriteNum == 3) {
+                    image = down_idle;
                 }
 
                 break;
