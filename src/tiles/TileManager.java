@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
 
     public TileManager(GamePanel gp) {
 
@@ -32,9 +32,26 @@ public class TileManager {
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tile[1].collision = true;
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/plains.png"));
+
+            tile[3] = new Tile(); // soft sand -- immediately around beach water
+            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand_soft.png"));
+
+            tile[4] = new Tile(); // sand path -- goes to the beach
+            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand_path.png"));
+
+            tile[5] = new Tile(); // snow path
+            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/snow_path.png"));
+
+            tile[6] = new Tile(); // hard snow
+            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/snow_hard.png"));
+
+            tile[7] = new Tile(); // icy water
+            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water_ice.png"));
+            tile[7].collision = true;
 
 
         } catch (Exception e) {
@@ -69,7 +86,7 @@ public class TileManager {
                 }
             }
             br.close();
-        }catch(Exception e){
+        } catch(Exception e){
 
         }
     }
@@ -88,7 +105,7 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if(worldX + gp.tileSize> gp.player.worldX-gp.player.screenX &&
+            if(worldX + gp.tileSize > gp.player.worldX-gp.player.screenX &&
                worldX - gp.tileSize < (gp.player.worldX+gp.player.screenX) &&
                worldY + gp.tileSize > gp.player.worldY-gp.player.screenY &&
                worldY - gp.tileSize < (gp.player.worldY+gp.player.screenY)){
