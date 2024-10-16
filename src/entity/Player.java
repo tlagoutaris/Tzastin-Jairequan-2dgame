@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class Player extends Entity {
     public final int screenY;
 
     public Player(GamePanel gp, KeyHandler keyH) {
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
@@ -26,6 +28,8 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -43,25 +47,19 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        try {
+        up_idle = setup("/player/player_up_idle");
+        up1 = setup("/player/player_up_1");
+        up2 = setup("/player/player_up_2");
 
-            up_idle = ImageIO.read(getClass().getResourceAsStream("/player/player_up_idle.png"));
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
+        down_idle = setup("/player/player_down_idle");
+        down1 = setup("/player/player_down_1");
+        down2 = setup("/player/player_down_2");
 
-            down_idle = ImageIO.read(getClass().getResourceAsStream("/player/player_down_idle.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
+        left1 = setup("/player/player_left_1");
+        left2 = setup("/player/player_left_2");
 
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
-
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        right1 = setup("/player/player_right_1");
+        right2 = setup("/player/player_right_2");
     }
 
     public void update() {
@@ -89,6 +87,9 @@ public class Player extends Entity {
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+            // Check enemy collision
+            int enemyIndex = gp.cChecker.checkEntity(this, gp.enemy);
+
             // If collision is false, player can move
             if (!collisionOn) {
 
@@ -107,7 +108,6 @@ public class Player extends Entity {
                         worldX += speed;
                         break;
                 }
-
             }
 
             spriteCounter++;

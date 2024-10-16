@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import entity.Player;
 import tiles.TileManager;
+import entity.Entity;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -33,7 +34,11 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     Thread gameThread; // handles the game loop
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
+
+    // Entities
     public Player player = new Player(this, keyH);
+    public Entity enemy[] = new Entity[10];
 
     public GamePanel() {
 
@@ -43,6 +48,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.addKeyListener(keyH); // adds the key listener to the panel
         this.setFocusable(true); // allows the panel to receive focus
+    }
+
+    public void setupGame() {
+        aSetter.setMonster();
     }
 
     public void startGameThread() {
@@ -78,7 +87,16 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+        // Player
         player.update();
+
+        // Enemy
+        for (int i = 0; i < enemy.length; i++) {
+            if (enemy[i] != null) {
+                enemy[i].update();
+            }
+        }
+
     }
 
     public void paintComponent(Graphics g) {
@@ -87,7 +105,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        // Tiles
         tileM.draw(g2);
+
+        for (int i = 0; i < enemy.length; i++) {
+            if (enemy[i] != null) {
+                enemy[i].draw(g2);
+            }
+        }
+
+        // Players
         player.draw(g2);
 
         g2.dispose();
