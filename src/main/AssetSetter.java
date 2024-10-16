@@ -12,7 +12,7 @@ public class AssetSetter {
 
     public void setMonster() {
         gp.enemy[0] = new MON_Skull(gp);
-        gp.enemy[0].worldX = gp.tileSize * 10;
-        gp.enemy[0].worldY = gp.tileSize * 10;
+        gp.enemy[0].worldX = gp.tileSize * 30;
+        gp.enemy[0].worldY = gp.tileSize * 5;
     }
 }
