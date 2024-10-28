@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import entity.Player;
+import object.SuperObject;
 import tiles.TileManager;
 import entity.Entity;
 
@@ -36,6 +37,9 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
 
+    //Objects
+    public SuperObject obj[] = new SuperObject[10];
+
     // Entities
     public Player player = new Player(this, keyH);
     public Entity enemy[] = new Entity[10];
@@ -51,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        aSetter.setObject();
         aSetter.setMonster();
     }
 
@@ -108,6 +113,14 @@ public class GamePanel extends JPanel implements Runnable {
         // Tiles
         tileM.draw(g2);
 
+        // Objects
+        for(int i = 0; i < obj.length; i++) {
+            if (obj[i] != null) {
+                obj[i].draw(g2, this);
+            }
+        }
+
+        // Enemies
         for (int i = 0; i < enemy.length; i++) {
             if (enemy[i] != null) {
                 enemy[i].draw(g2);
