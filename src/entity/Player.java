@@ -91,6 +91,10 @@ public class Player extends Entity {
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+            // Check object collision
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
             // Check enemy collision
             int enemyIndex = gp.cChecker.checkEntity(this, gp.enemy);
 
@@ -129,6 +133,15 @@ public class Player extends Entity {
             } else {
                 spriteNum = 1; // left or right
             }
+        }
+    }
+
+    public void pickUpObject(int index) {
+
+        if (index != 999) {
+
+            gp.obj[index] = null;
+
         }
     }
 
