@@ -45,6 +45,8 @@ public class Entity {
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntity(this, gp.enemy);
+        gp.cChecker.checkPlayer(this);
 
         // If collision is false, player can move
         if (!collisionOn) {
