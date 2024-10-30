@@ -199,4 +199,11 @@ public class CollisionChecker {
         return index;
     }
 
+    public boolean checkPlayer(Entity entity) {
+        boolean player = false;
+        if (entity.name.equals("player")) {
+            player = true;
+        }
+        return player;
+    }
 }
