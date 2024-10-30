@@ -16,6 +16,8 @@ public class Player extends Entity {
 
     public final int screenX;
     public final int screenY;
+    public int gemNum = 0;
+    public int levelUpReq;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -41,12 +43,13 @@ public class Player extends Entity {
 
         worldX = gp.worldWidth / 2;
         worldY = gp.worldHeight /2;
-        speed = 4;
         direction = "down";
 
         // Player Status
         maxLife = 10;
         life = maxLife;
+        levelUpReq = 1;
+        speed = 4;
     }
 
     public void getPlayerImage() {
@@ -114,6 +117,13 @@ public class Player extends Entity {
                 }
             }
 
+            //check object collision
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
+
+
+
             spriteCounter++;
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
@@ -129,6 +139,28 @@ public class Player extends Entity {
             } else {
                 spriteNum = 1; // left or right
             }
+        }
+    }
+
+    public void pickUpObject(int i){
+        if(i != 999){
+            String objectName = gp.obj[i].name;
+            switch (objectName) {
+                case "Gem":
+                    gemNum++;
+                    gp.obj[i] = null;
+                    if(gemNum>=levelUpReq){
+                        levelUpReq += levelUpReq*1.25 + 2;
+                        gp.ui.showMessage("You have leveled up!");
+                    }
+
+                    //test to end game
+                    if(gemNum ==2){
+                        gp.ui.gameFinished = true;
+                    }
+                    break;
+            }
+            gp.obj[i] = null;
         }
     }
 

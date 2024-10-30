@@ -17,6 +17,10 @@ public class AssetSetter {
         gp.obj[0].worldX =  20 * gp.tileSize;
         gp.obj[0].worldY =  10 * gp.tileSize;
 
+        gp.obj[1] = new OBJ_Gem();
+        gp.obj[1].worldX =  30 * gp.tileSize;
+        gp.obj[1].worldY =  10 * gp.tileSize;
+
     }
 
     //enemies
