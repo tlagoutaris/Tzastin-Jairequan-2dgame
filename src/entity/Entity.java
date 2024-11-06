@@ -29,6 +29,8 @@ public class Entity {
     public int actionLockCounter = 0;
 
     public String name;
+
+    // Character status
     public int maxLife;
     public int life;
 
