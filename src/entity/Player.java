@@ -18,6 +18,8 @@ public class Player extends Entity {
     public final int screenY;
     public int gemNum = 0;
     public int levelUpReq;
+    public boolean invincible;
+    public int iFrames = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -96,6 +98,7 @@ public class Player extends Entity {
 
             // Check enemy collision
             int enemyIndex = gp.cChecker.checkEntity(this, gp.enemy);
+            contactMonster(enemyIndex);
 
             // If collision is false, player can move
             if (!collisionOn) {
@@ -135,6 +138,25 @@ public class Player extends Entity {
                 spriteNum = 3;
             } else {
                 spriteNum = 1; // left or right
+            }
+        }
+
+        //updates iframes
+        if(invincible){
+            iFrames++;
+            if(iFrames > 60){
+                invincible = false;
+                iFrames = 0;
+            }
+        }
+    }
+
+    //damage from monsters
+    public void contactMonster(int i){
+        if(i != 999) {
+            if(invincible == false) {
+                life -= 1;
+                invincible = true;
             }
         }
     }
@@ -220,7 +242,15 @@ public class Player extends Entity {
                 break;
         }
 
+        //make player transparent
+        if(invincible){
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        //reset transparency for anything else drawn
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
     }
 

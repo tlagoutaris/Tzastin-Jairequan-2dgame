@@ -27,6 +27,7 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+    public int type; //0 = player, 1 = enemy, 2 = npc (if we add)
 
     public String name;
 
@@ -48,7 +49,14 @@ public class Entity {
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkEntity(this, gp.enemy);
-        gp.cChecker.checkPlayer(this);
+        boolean contactPlayer = gp.cChecker.checkPlayer(this);
+
+        if(this.type == 1 && contactPlayer){
+            if(gp.player.invincible == false){
+                gp.player.life -= 1;
+                gp.player.invincible = true;
+            }
+        }
 
         // If collision is false, player can move
         if (!collisionOn) {

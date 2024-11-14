@@ -16,6 +16,7 @@ public class MON_Skull extends Entity {
     public MON_Skull(GamePanel gp) {
         super(gp);
 
+        type = 1;
         name = "Skull";
         speed = 1;
         maxLife = 4;
