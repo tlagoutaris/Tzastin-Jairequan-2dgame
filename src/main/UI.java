@@ -77,65 +77,83 @@ public class UI {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
 
-        //draw hearts, can be added to each game state when they are added
-        drawPlayerLife();
+        if (gp.gameState == gp.playState) {
 
-        if(gameFinished){
+            //draw hearts, can be added to each game state when they are added
+            drawPlayerLife();
 
-            String text;
-            int textLength;
-            int x;
-            int y;
+            if(gameFinished){
 
-            text = "You won";
-            textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-            g2.setFont(arial_40);
-            g2.setColor(Color.yellow);
+                String text;
+                int textLength;
+                int x;
+                int y;
 
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 - (gp.tileSize*3);
-            g2.drawString(text,x,y);
+                text = "You won";
+                textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+                g2.setFont(arial_40);
+                g2.setColor(Color.yellow);
 
-            text = "Your time is " + dFormat.format(playTime);
-            textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-            g2.setFont(arial_40);
-            g2.setColor(Color.yellow);
+                x = gp.screenWidth/2 - textLength/2;
+                y = gp.screenHeight/2 - (gp.tileSize*3);
+                g2.drawString(text,x,y);
 
-            x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 - (gp.tileSize*2);
-            g2.drawString(text,x,y);
+                text = "Your time is " + dFormat.format(playTime);
+                textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+                g2.setFont(arial_40);
+                g2.setColor(Color.yellow);
 
-            gp.gameThread = null;
+                x = gp.screenWidth/2 - textLength/2;
+                y = gp.screenHeight/2 - (gp.tileSize*2);
+                g2.drawString(text,x,y);
 
+                gp.gameThread = null;
+            }else{
+                //display gems
+                g2.setFont(arial_40);
+                g2.setColor(Color.white);
+                g2.drawImage(gemImage, -10, gp.tileSize*1 + 14, gp.tileSize, gp.tileSize, null);
+                g2.drawString("x " + gp.player.gemNum, 30, gp.tileSize*2);
 
+                //display coordinates
+                g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " +
+                        gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
 
-        }else{
-            //display gems
-            g2.setFont(arial_40);
-            g2.setColor(Color.white);
-            g2.drawImage(gemImage, -10, gp.tileSize*1 + 14, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.gemNum, 30, gp.tileSize*2);
+                //time
+                playTime += (double)1/60;
+                g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, 66);
 
-            //display coordinates
-            g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " +
-                    gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
+                //message
+                if(messageOn){
+                    g2.setFont(g2.getFont().deriveFont(30f));
+                    g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
 
-            //time
-            playTime += (double)1/60;
-            g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, 66);
+                    messageCounter++;
 
-            //message
-            if(messageOn){
-                g2.setFont(g2.getFont().deriveFont(30f));
-                g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
-
-                messageCounter++;
-
-                if(messageCounter > 120){
-                    messageCounter = 0;
-                    messageOn = false;
+                    if(messageCounter > 120){
+                        messageCounter = 0;
+                        messageOn = false;
+                    }
                 }
             }
         }
+
+        if (gp.gameState == gp.pauseState) {
+            drawPauseScreen();
+        }
+    }
+
+    public void drawPauseScreen() {
+
+        String pause_text = "PAUSED";
+        int pause_text_length = textWidth(pause_text);
+        int x = (gp.screenWidth / 2) - pause_text_length / 2;
+        int y = gp.screenHeight / 2;
+
+        g2.drawString(pause_text, x, y);
+    }
+
+    public int textWidth(String text) {
+        return (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
     }
 }

@@ -121,9 +121,6 @@ public class Player extends Entity {
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
 
-
-
-
             spriteCounter++;
             if (spriteCounter > 12) {
                 if (spriteNum == 1) {
