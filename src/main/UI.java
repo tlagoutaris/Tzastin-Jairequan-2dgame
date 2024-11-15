@@ -221,6 +221,7 @@ public class UI {
         drawLeftBar();
         drawRightBar();
         drawInventory();
+
     }
 
     public void drawPauseScreen() {
