@@ -44,6 +44,12 @@ public class UI {
     int right_bar_width;
     int right_bar_height;
 
+    // event box
+    int event_box_x;
+    int event_box_y;
+    int event_box_width;
+    int event_box_height;
+
     public UI(GamePanel gp) {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
@@ -79,6 +85,12 @@ public class UI {
         right_bar_y = 0;
         right_bar_width = gp.tileSize * 2;
         right_bar_height = gp.screenHeight;
+
+        // event box
+        event_box_x = (gp.screenWidth/2) - (gp.tileSize * 2);
+        event_box_y = bottom_bar_y + 8;
+        event_box_width = gp.tileSize * 5;
+        event_box_height = gp.tileSize * 2;
     }
 
     public void showMessage(String text) {
@@ -106,8 +118,10 @@ public class UI {
 
             // message
             if(messageOn){
-                g2.setFont(g2.getFont().deriveFont(30f));
-                g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
+                g2.setFont(g2.getFont().deriveFont(24f));
+                int messageLength = getTextWidth(message);
+                int x = (event_box_x + (event_box_width / 2)) - messageLength;
+                g2.drawString(message, x, event_box_y + (event_box_height / 2));
 
                 messageCounter++;
 
@@ -263,7 +277,9 @@ public class UI {
 
     public void drawHearts(){
 
-        int x = gp.screenWidth/2 - (gp.player.maxLife/5 * gp.tileSize) - 10;
+        int width = gp.player.maxLife/2 * gp.tileSize;
+
+        int x = gp.screenWidth/2 - (width / 2);
         int y = bottom_bar_y + gp.tileSize * 2;
         int i = 0;
 
@@ -275,7 +291,7 @@ public class UI {
         }
 
         // reset
-        x = gp.screenWidth/2 - (gp.player.maxLife/5 * gp.tileSize) - 10;
+        x = gp.screenWidth/2 - (width / 2);
         y = bottom_bar_y + gp.tileSize * 2;
         i = 0;
 
@@ -312,12 +328,40 @@ public class UI {
         g2.drawString("Inventory", left_bar_width, bottom_bar_y + gp.tileSize);
     }
 
+    public void drawEventBox() {
+
+        Color c = new Color(64, 43, 149);
+        g2.setColor(c);
+
+        int width = gp.tileSize * 5;
+        int height = gp.tileSize * 2;
+        int x = (gp.screenWidth / 2) - (width/2);
+        int y = bottom_bar_y + 8;
+        int arc = 50;
+
+        g2.fillRoundRect(x, y, width, height, arc, arc);
+
+        // Subbox
+        c = new Color(45, 27, 117);
+        g2.setColor(c);
+
+        x += 5;
+        y += 5;
+        width -= 10;
+        height -= 10;
+
+        g2.fillRoundRect(x, y, width, height, arc, arc);
+
+
+    }
+
     public void drawUIOverlay() {
 
         drawBottomBar();
         drawLeftBar();
         drawRightBar();
         drawInventory();
+        drawEventBox();
 
     }
 
@@ -330,7 +374,7 @@ public class UI {
         g2.drawString(pause_text, x, y);
     }
 
-    public int getTextWidth(String text) {
+    public int getTextWidth(String text) { // probably not necessary anymore
         return (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
     }
 
