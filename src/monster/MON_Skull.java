@@ -13,9 +13,11 @@ public class MON_Skull extends Entity {
 
     //String state = "peaceful";
 
+
     public MON_Skull(GamePanel gp) {
         super(gp);
 
+        type = 1;
         name = "Skull";
         speed = 1;
         maxLife = 4;
@@ -63,9 +65,54 @@ public class MON_Skull extends Entity {
         right2 = setup("/monster/enemy_skull_peaceful_up_right");
     }
 
+    public void update(){
+        collisionOn = false;
+        boolean contactPlayer = gp.cChecker.checkPlayer(this);
+
+        if(this.type == 1 && contactPlayer){
+            if(gp.player.invincible == false){
+                gp.player.life -= 1;
+                gp.player.invincible = true;
+            }
+        }
+
+        //moves to player
+        if(!collisionOn){
+
+            //move horizonatally
+            if(gp.player.worldX > worldX){
+                worldX += speed;
+                direction = "right";
+            } else if(gp.player.worldX < worldX){
+                worldX -= speed;
+                direction = "left";
+            }
+
+            //move vertically
+            if(gp.player.worldY > worldY){
+                worldY += speed;
+                direction = "down";
+            }else if(gp.player.worldY < worldY){
+                worldY -= speed;
+                direction = "up";
+            }
+        }
+
+        spriteCounter++;
+        if (spriteCounter > 12) {
+            if (spriteNum == 1) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+
+    }
+
     public void setAction() {
 
-        actionLockCounter ++;
+        /**actionLockCounter ++;
 
         if (actionLockCounter == 120) {
             SecureRandom r = new SecureRandom();
@@ -88,6 +135,6 @@ public class MON_Skull extends Entity {
             }
 
             actionLockCounter = 0;
-        }
+        }*/
     }
 }
