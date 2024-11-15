@@ -174,8 +174,8 @@ public class Player extends Entity {
                     }
 
                     //test to end game
-                    if(gemNum ==2){
-                        gp.ui.gameFinished = true;
+                    if(gemNum == 2){
+                        gp.gameState = gp.gameWonState;
                     }
                     break;
             }

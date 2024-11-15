@@ -177,16 +177,12 @@ public class UI {
 
     public void drawGameWonScreen() {
 
-    }
-
-    public void drawGameOverScreen() {
-
         String text;
         int textLength;
         int x;
         int y;
 
-        text = "You won";
+        text = "You Won!";
         textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
         g2.setFont(arial_40);
         g2.setColor(Color.yellow);
@@ -203,8 +199,32 @@ public class UI {
         x = gp.screenWidth/2 - textLength/2;
         y = gp.screenHeight/2 - (gp.tileSize*2);
         g2.drawString(text,x,y);
-        
-        gp.gameThread = null;
+    }
+
+    public void drawGameOverScreen() {
+
+        String text;
+        int textLength;
+        int x;
+        int y;
+
+        text = "Game Over";
+        textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow);
+
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 - (gp.tileSize*3);
+        g2.drawString(text,x,y);
+
+        text = "Your time is " + dFormat.format(playTime);
+        textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow);
+
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 - (gp.tileSize*2);
+        g2.drawString(text,x,y);
     }
 
     public void drawUIStats() {
