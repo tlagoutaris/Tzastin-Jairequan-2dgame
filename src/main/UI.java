@@ -21,6 +21,8 @@ public class UI {
     public boolean gameFinished = false;
     double playTime = 0;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
+    public int commandNum = 0;
+    public int maxCommandNum = 2;
 
     // Dimensions of UI overlay
 
@@ -91,6 +93,10 @@ public class UI {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
 
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+
         if (gp.gameState == gp.playState) {
 
             if(gameFinished){
@@ -123,25 +129,8 @@ public class UI {
 
                 // UI Overlay
                 drawUIOverlay();
-
-                // draw hearts, can be added to each game state when they are added
-                drawHearts();
-
-                // display gems
-                g2.setFont(arial_40);
-                g2.setColor(Color.white);
-                g2.drawImage(gemImage, left_bar_width, bottom_bar_y + gp.tileSize + OBJ_Gem.height, gp.tileSize, gp.tileSize, null);
-                g2.drawString("x " + gp.player.gemNum, left_bar_width + gp.tileSize, bottom_bar_y + (gp.tileSize * 2));
-
-
-                // display coordinates
-                // g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " + gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
-
-
-                // time
-                playTime += (double)1/60;
-                g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, bottom_bar_y + gp.tileSize);
-
+                drawUIStats();
+                drawTime();
 
                 // message
                 if(messageOn){
@@ -155,13 +144,90 @@ public class UI {
                         messageOn = false;
                     }
                 }
-
             }
         }
 
         if (gp.gameState == gp.pauseState) {
+
             drawPauseScreen();
+            drawUIOverlay();
+            drawUIStats();
+            drawTime(playTime);
+
         }
+    }
+
+    public void drawTitleScreen() {
+
+        // Title name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 66F));
+        String text = "Game: The Game";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
+
+        // Options Menu
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+        text = "New Game";
+        x = getXforCenteredText(text);
+        y += (gp.tileSize * 4);
+        g2.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "Load Game";
+        x = getXforCenteredText(text);
+        y += (gp.tileSize * 2);
+        g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = getXforCenteredText(text);
+        y += (gp.tileSize * 2);
+        g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.drawString(">", x - gp.tileSize, y);
+        }
+    }
+
+    public void drawUIStats() {
+
+        drawHearts();
+        drawGems();
+        //drawCoordinates();
+
+    }
+
+    public void drawCoordinates() {
+        g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " + gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
+    }
+
+    public void drawGems() {
+
+        g2.setFont(arial_40);
+        g2.setColor(Color.white);
+        g2.drawImage(gemImage, left_bar_width, bottom_bar_y + gp.tileSize + OBJ_Gem.height, gp.tileSize, gp.tileSize, null);
+        g2.drawString("x " + gp.player.gemNum, left_bar_width + gp.tileSize, bottom_bar_y + (gp.tileSize * 2));
+
+    }
+
+    public void drawTime() {
+
+        playTime += (double)1/60;
+        g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, bottom_bar_y + gp.tileSize);
+
+    }
+
+    public void drawTime(double currentTime) { // if paused
+
+        g2.drawString("Time " + dFormat.format(currentTime), gp.tileSize*11, bottom_bar_y + gp.tileSize);
+
     }
 
     public void drawHearts(){
@@ -227,14 +293,21 @@ public class UI {
     public void drawPauseScreen() {
 
         String pause_text = "PAUSED";
-        int pause_text_length = textWidth(pause_text);
-        int x = (gp.screenWidth / 2) - pause_text_length / 2;
+        int x = getXforCenteredText(pause_text);
         int y = gp.screenHeight / 2;
 
         g2.drawString(pause_text, x, y);
     }
 
-    public int textWidth(String text) {
+    public int getTextWidth(String text) {
         return (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+    }
+
+    public int getXforCenteredText(String text) {
+
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = gp.screenWidth/2 - length/2;
+        return x;
+
     }
 }
