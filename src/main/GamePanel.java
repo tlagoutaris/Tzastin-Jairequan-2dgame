@@ -51,6 +51,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int gameOverState = 3;
+    public final int gameWonState = 4;
 
     public GamePanel() {
 
@@ -113,6 +115,14 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
+        if (gameState == gameOverState) {
+            // nothing
+        }
+
+        if (gameState == gameWonState) {
+            // nothing
+        }
+
         if (gameState == pauseState) {
             // nothing
         }
@@ -123,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         // Title screen
-        if (gameState == titleState) {
+        if (gameState == titleState || gameState == gameOverState || gameState == gameWonState) {
 
             ui.draw(g2);
 

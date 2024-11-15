@@ -99,52 +99,31 @@ public class UI {
 
         if (gp.gameState == gp.playState) {
 
-            if(gameFinished){
+            // UI Overlay
+            drawUIOverlay();
+            drawUIStats();
+            drawTime();
 
-                String text;
-                int textLength;
-                int x;
-                int y;
+            // message
+            if(messageOn){
+                g2.setFont(g2.getFont().deriveFont(30f));
+                g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
 
-                text = "You won";
-                textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-                g2.setFont(arial_40);
-                g2.setColor(Color.yellow);
+                messageCounter++;
 
-                x = gp.screenWidth/2 - textLength/2;
-                y = gp.screenHeight/2 - (gp.tileSize*3);
-                g2.drawString(text,x,y);
-
-                text = "Your time is " + dFormat.format(playTime);
-                textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
-                g2.setFont(arial_40);
-                g2.setColor(Color.yellow);
-
-                x = gp.screenWidth/2 - textLength/2;
-                y = gp.screenHeight/2 - (gp.tileSize*2);
-                g2.drawString(text,x,y);
-
-                gp.gameThread = null;
-            }else{
-
-                // UI Overlay
-                drawUIOverlay();
-                drawUIStats();
-                drawTime();
-
-                // message
-                if(messageOn){
-                    g2.setFont(g2.getFont().deriveFont(30f));
-                    g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
-
-                    messageCounter++;
-
-                    if(messageCounter > 120){
-                        messageCounter = 0;
-                        messageOn = false;
-                    }
+                if(messageCounter > 120){
+                    messageCounter = 0;
+                    messageOn = false;
                 }
             }
+        }
+
+        if (gp.gameState == gp.gameOverState) {
+            drawGameOverScreen();
+        }
+
+        if (gp.gameState == gp.gameWonState) {
+            drawGameWonScreen();
         }
 
         if (gp.gameState == gp.pauseState) {
@@ -194,6 +173,38 @@ public class UI {
         if (commandNum == 2) {
             g2.drawString(">", x - gp.tileSize, y);
         }
+    }
+
+    public void drawGameWonScreen() {
+
+    }
+
+    public void drawGameOverScreen() {
+
+        String text;
+        int textLength;
+        int x;
+        int y;
+
+        text = "You won";
+        textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow);
+
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 - (gp.tileSize*3);
+        g2.drawString(text,x,y);
+
+        text = "Your time is " + dFormat.format(playTime);
+        textLength = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow);
+
+        x = gp.screenWidth/2 - textLength/2;
+        y = gp.screenHeight/2 - (gp.tileSize*2);
+        g2.drawString(text,x,y);
+        
+        gp.gameThread = null;
     }
 
     public void drawUIStats() {

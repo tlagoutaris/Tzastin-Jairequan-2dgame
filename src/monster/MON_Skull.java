@@ -70,6 +70,11 @@ public class MON_Skull extends Entity {
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
         if(this.type == 1 && contactPlayer){
+
+            if (gp.player.life <= 0) {
+                gp.gameState = gp.gameOverState;
+            }
+
             if(gp.player.invincible == false){
                 gp.player.life -= 1;
                 gp.player.invincible = true;
