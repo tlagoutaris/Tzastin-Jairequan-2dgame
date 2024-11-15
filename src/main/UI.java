@@ -22,6 +22,26 @@ public class UI {
     double playTime = 0;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    // Dimensions of UI overlay
+
+    // bottom bar
+    int bottom_bar_x;
+    int bottom_bar_y;
+    int bottom_bar_width;
+    int bottom_bar_height;
+
+    // left bar
+    int left_bar_x;
+    int left_bar_y;
+    int left_bar_width;
+    int left_bar_height;
+
+    // right bar
+    int right_bar_x;
+    int right_bar_y;
+    int right_bar_width;
+    int right_bar_height;
+
     public UI(GamePanel gp) {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
@@ -33,41 +53,35 @@ public class UI {
         heart_blank = heart.image;
         heart_half = heart.image2;
         heart_full = heart.image3;
+
+        setUIOverlayValues();
+    }
+
+    public void setUIOverlayValues() {
+        // Dimensions of UI overlay
+
+        // bottom bar
+        bottom_bar_x = 0;
+        bottom_bar_y = gp.screenHeight - (gp.tileSize * 3);
+        bottom_bar_width = gp.screenWidth;
+        bottom_bar_height = gp.tileSize * 3;
+
+        // left bar
+        left_bar_x = 0;
+        left_bar_y = 0;
+        left_bar_width = gp.tileSize * 2;
+        left_bar_height = gp.screenHeight;
+
+        // right bar
+        right_bar_x = gp.screenWidth - (gp.tileSize * 2);
+        right_bar_y = 0;
+        right_bar_width = gp.tileSize * 2;
+        right_bar_height = gp.screenHeight;
     }
 
     public void showMessage(String text) {
         message = text;
         messageOn = true;
-    }
-
-    public void drawPlayerLife(){
-
-        int x = gp.tileSize/2;
-        int y = gp.tileSize/2;
-        int i = 0;
-
-        // draw blank heart
-        while(i < gp.player.maxLife/2){
-            g2.drawImage(heart_blank, x, y, null);
-            i++;
-            x += gp.tileSize;
-        }
-
-        // reset
-        x = gp.tileSize/2;
-        y = gp.tileSize/2;
-        i = 0;
-
-        // draw current life
-        while(i < gp.player.life){
-            g2.drawImage(heart_half, x, y, null);
-            i++;
-            if(i < gp.player.life){
-                g2.drawImage(heart_full, x, y, null);
-            }
-            i++;
-            x += gp.tileSize;
-        }
     }
 
     public void draw(Graphics2D g2) {
@@ -78,9 +92,6 @@ public class UI {
         g2.setColor(Color.white);
 
         if (gp.gameState == gp.playState) {
-
-            //draw hearts, can be added to each game state when they are added
-            drawPlayerLife();
 
             if(gameFinished){
 
@@ -109,21 +120,30 @@ public class UI {
 
                 gp.gameThread = null;
             }else{
-                //display gems
+
+                // UI Overlay
+                drawUIOverlay();
+
+                // draw hearts, can be added to each game state when they are added
+                drawHearts();
+
+                // display gems
                 g2.setFont(arial_40);
                 g2.setColor(Color.white);
-                g2.drawImage(gemImage, -10, gp.tileSize*1 + 14, gp.tileSize, gp.tileSize, null);
-                g2.drawString("x " + gp.player.gemNum, 30, gp.tileSize*2);
+                g2.drawImage(gemImage, left_bar_width, bottom_bar_y + gp.tileSize + OBJ_Gem.height, gp.tileSize, gp.tileSize, null);
+                g2.drawString("x " + gp.player.gemNum, left_bar_width + gp.tileSize, bottom_bar_y + (gp.tileSize * 2));
 
-                //display coordinates
-                g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " +
-                        gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
 
-                //time
+                // display coordinates
+                // g2.drawString("x " + gp.player.worldX / gp.tileSize +", y " + gp.player.worldY / gp.tileSize,10, gp.tileSize*3);
+
+
+                // time
                 playTime += (double)1/60;
-                g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, 66);
+                g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, bottom_bar_y + gp.tileSize);
 
-                //message
+
+                // message
                 if(messageOn){
                     g2.setFont(g2.getFont().deriveFont(30f));
                     g2.drawString(message, gp.tileSize / 2, gp.tileSize *5);
@@ -135,12 +155,72 @@ public class UI {
                         messageOn = false;
                     }
                 }
+
             }
         }
 
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
         }
+    }
+
+    public void drawHearts(){
+
+        int x = gp.screenWidth/2 - (gp.player.maxLife/5 * gp.tileSize) - 10;
+        int y = bottom_bar_y + gp.tileSize * 2;
+        int i = 0;
+
+        // draw blank heart
+        while(i < gp.player.maxLife/2){
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        // reset
+        x = gp.screenWidth/2 - (gp.player.maxLife/5 * gp.tileSize) - 10;
+        y = bottom_bar_y + gp.tileSize * 2;
+        i = 0;
+
+        // draw current life
+        while(i < gp.player.life){
+            g2.drawImage(heart_half, x, y, null);
+            i++;
+            if(i < gp.player.life){
+                g2.drawImage(heart_full, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
+        }
+    }
+
+    public void drawBottomBar() {
+        g2.setColor(new Color(0, 0, 0));
+        g2.fillRect(bottom_bar_x, bottom_bar_y, bottom_bar_width, bottom_bar_height);
+    }
+
+    public void drawLeftBar() {
+        g2.setColor(new Color(0, 0, 0));
+        g2.fillRect(left_bar_x, left_bar_y, left_bar_width, left_bar_height);
+    }
+
+    public void drawRightBar() {
+        g2.setColor(new Color(0, 0, 0));
+        g2.fillRect(right_bar_x, right_bar_y, right_bar_width, right_bar_height);
+    }
+
+    public void drawInventory() {
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow);
+        g2.drawString("Inventory", left_bar_width, bottom_bar_y + gp.tileSize);
+    }
+
+    public void drawUIOverlay() {
+
+        drawBottomBar();
+        drawLeftBar();
+        drawRightBar();
+        drawInventory();
     }
 
     public void drawPauseScreen() {

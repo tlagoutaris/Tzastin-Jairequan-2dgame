@@ -9,7 +9,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // closes the program when the window is closed
         window.setResizable(false); // window cannot be resized
-        window.setTitle("2D Game");
+        window.setTitle("Game");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
