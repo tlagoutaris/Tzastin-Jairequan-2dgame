@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
 
 public class Entity {
 
-    GamePanel gp;
+    public GamePanel gp;
 
     public int worldX, worldY;
     public int speed;
