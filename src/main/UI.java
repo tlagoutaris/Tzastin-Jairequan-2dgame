@@ -265,8 +265,13 @@ public class UI {
 
     public void drawTime() {
 
+        g2.setFont(arial_40);
+        g2.setColor(Color.yellow); // this is probably not efficient, since it would be setting the color to yellow constantly
+
         playTime += (double)1/60;
-        g2.drawString("Time " + dFormat.format(playTime), gp.tileSize*11, bottom_bar_y + gp.tileSize);
+        g2.drawString("Time", right_bar_x - getTextWidth("1200.59"), bottom_bar_y + gp.tileSize);
+        g2.setColor(Color.white);
+        g2.drawString(dFormat.format(playTime), right_bar_x - getTextWidth("1200.59"), bottom_bar_y + gp.tileSize*2);
 
     }
 
