@@ -170,7 +170,7 @@ public class Player extends Entity {
                     gp.obj[i] = null;
                     if(gemNum>=levelUpReq){
                         levelUpReq += levelUpReq*1.25 + 2;
-                        gp.ui.showMessage("Level Up!");
+                        gp.ui.showMessage("LEVEL UP!");
                     }
 
                     //test to end game

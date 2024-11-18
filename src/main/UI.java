@@ -120,8 +120,9 @@ public class UI {
             if(messageOn){
                 g2.setFont(g2.getFont().deriveFont(24f));
                 int messageLength = getTextWidth(message);
-                int x = (event_box_x + (event_box_width / 2)) - messageLength;
-                g2.drawString(message, x, event_box_y + (event_box_height / 2));
+                int x = (event_box_x + (event_box_width / 2)) - (messageLength / 2) - 15;
+                int y = event_box_y + (event_box_height / 2);
+                g2.drawString(message, x, y);
 
                 messageCounter++;
 
