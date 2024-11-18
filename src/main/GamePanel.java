@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int scale = 3;
 
     public final int tileSize = originalTileSize * scale; // 48x48 tile
-    public final int maxScreenCol = 16;
+    public final int maxScreenCol = 16; // I want the world to be scaled up by 2
     public final int maxScreenRow = 12; // creates a 4x3 screen ratio
     public final int screenWidth = tileSize * maxScreenCol; // currently 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // currently 576 pixels
@@ -39,12 +39,12 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
 
-    //Objects
-    public SuperObject obj[] = new SuperObject[10];
+    // Objects
+    public SuperObject[] obj = new SuperObject[10];
 
     // Entities
     public Player player = new Player(this, keyH);
-    public Entity enemy[] = new Entity[10];
+    public Entity[] enemy = new Entity[1000];
 
     // Game State
     public int gameState;
@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         aSetter.setObject();
-        aSetter.setMonster();
+        aSetter.spawnGroupTest(20);
         gameState = titleState;
     }
 

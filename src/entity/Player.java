@@ -44,7 +44,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
 
         worldX = gp.worldWidth / 2;
-        worldY = gp.worldHeight /2;
+        worldY = gp.worldHeight / 2;
         direction = "down";
 
         // Player Status
@@ -69,6 +69,7 @@ public class Player extends Entity {
 
         right1 = setup("/player/player_right_1");
         right2 = setup("/player/player_right_2");
+
     }
 
     public void update() {

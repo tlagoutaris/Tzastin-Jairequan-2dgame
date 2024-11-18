@@ -40,7 +40,7 @@ public class Entity {
     }
 
     public void setAction() {
-
+        // do something
     }
 
     public void update() {

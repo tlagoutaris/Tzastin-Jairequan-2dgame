@@ -20,14 +20,14 @@ public class TileManager {
 
         this.gp = gp;
 
-        tile = new Tile[10];
+        tile = new Tile[999];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
         loadMap("/maps/map01.txt");
     }
 
-    public void getTileImage() {
+    public void getTileImage() { // from 100 to 999
 
         setup(0, "grass", false);
         setup(1, "water", true);

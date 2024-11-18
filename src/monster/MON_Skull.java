@@ -67,6 +67,8 @@ public class MON_Skull extends Entity {
 
     public void update(){
         collisionOn = false;
+        /*gp.cChecker.checkTile(this);
+        gp.cChecker.checkEntity(this, gp.enemy);*/
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
         if(this.type == 1 && contactPlayer){
@@ -75,7 +77,7 @@ public class MON_Skull extends Entity {
                 gp.gameState = gp.gameOverState;
             }
 
-            if(gp.player.invincible == false){
+            if(!gp.player.invincible){
                 gp.player.life -= 1;
                 gp.player.invincible = true;
             }
@@ -112,7 +114,6 @@ public class MON_Skull extends Entity {
             }
             spriteCounter = 0;
         }
-
     }
 
     public void setAction() {
