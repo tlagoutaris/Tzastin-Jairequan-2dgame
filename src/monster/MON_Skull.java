@@ -84,7 +84,7 @@ public class MON_Skull extends Entity {
         }
 
         //moves to player
-        if(!collisionOn){
+        if(!contactPlayer){
 
             //move horizonatally
             if(gp.player.worldX > worldX){

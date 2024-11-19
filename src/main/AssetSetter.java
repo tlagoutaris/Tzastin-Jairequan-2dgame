@@ -23,11 +23,11 @@ public class AssetSetter {
     public void setObject(){
         gp.obj[0] = new OBJ_Gem(gp);
         gp.obj[0].worldX =  20 * gp.tileSize;
-        gp.obj[0].worldY =  10 * gp.tileSize;
+        gp.obj[0].worldY =  9 * gp.tileSize;
 
         gp.obj[1] = new OBJ_Gem(gp);
         gp.obj[1].worldX =  30 * gp.tileSize;
-        gp.obj[1].worldY =  10 * gp.tileSize;
+        gp.obj[1].worldY =  3 * gp.tileSize;
     }
 
     //enemies

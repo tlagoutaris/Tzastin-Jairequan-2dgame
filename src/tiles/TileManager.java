@@ -37,6 +37,12 @@ public class TileManager {
         setup(5, "snow_path", false);
         setup(6, "snow_hard", false);
         setup(7, "water_ice", true);
+        setup(8, "fence_bottom_left_corner", true);
+        setup(9, "fence_bottom_right_corner", true);
+        setup(10, "fence_horizontal", true);
+        setup(11, "fence_top_right_corner", true);
+        setup(12, "fence_top_left_corner", true);
+        setup(13, "fence_vertical", true);
 
     }
 
