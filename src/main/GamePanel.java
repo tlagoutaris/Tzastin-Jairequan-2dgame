@@ -23,8 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow; // currently 576 pixels
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 40;
-    public final int maxWorldRow = 14;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 24;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Entities
     public Player player = new Player(this, keyH);
     public Entity[] enemy = new Entity[1000];
+    int testSpawn = 0;
 
     // Game State
     public int gameState;
@@ -66,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         aSetter.setObject();
-        aSetter.spawnGroupTest(10);
         gameState = titleState;
     }
 
@@ -106,6 +106,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             // Player
             player.update();
+
+            //test spawn 1 group of enemies
+            if(testSpawn == 0){
+                aSetter.spawnGroupTest(20);
+                testSpawn++;
+            }
 
             // Enemy
             for (int i = 0; i < enemy.length; i++) {

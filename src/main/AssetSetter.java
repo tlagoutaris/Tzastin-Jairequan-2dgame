@@ -58,10 +58,26 @@ public class AssetSetter {
         SecureRandom r = new SecureRandom();
         int x;
         int y;
+        int horizontal; //0 for left of player, 1 for right
+        int vertical;   //0 for above player, 1 for below
 
         for (int i = 0; i < spawning; i++) {
-            x = r.nextInt(0, gp.maxWorldCol - 1) * gp.tileSize;
-            y = r.nextInt(0, gp.maxWorldRow - 1) * gp.tileSize;
+            horizontal = r.nextInt(0, 2);
+            vertical = r.nextInt(0, 2);
+
+
+            //makes monsters spawn randomly in the area anywhere besides right next to player
+            if (horizontal == 0){
+                x = r.nextInt(gp.player.worldX - (5* gp.tileSize), gp.player.worldX - (3 * gp.tileSize));
+            }else{
+                x = r.nextInt(gp.player.worldX + (3 * gp.tileSize), (gp.player.worldX + (5* gp.tileSize)));
+            }
+
+            if (vertical == 0){
+                y = r.nextInt(gp.player.worldY - (5 * gp.tileSize), gp.player.worldY - (3 * gp.tileSize));
+            }else{
+                y = r.nextInt(gp.player.worldY + (3 * gp.tileSize), gp.player.worldY + (5 * gp.tileSize));
+            }
 
             setMonster(i, x, y);
         }
