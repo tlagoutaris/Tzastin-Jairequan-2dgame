@@ -157,6 +157,7 @@ public class Player extends Entity {
         if(i != 999) {
             if(invincible == false) {
                 life -= 1;
+                gp.playSFX(1);
                 invincible = true;
             }
         }
@@ -168,6 +169,7 @@ public class Player extends Entity {
             switch (objectName) {
                 case "Gem":
                     gemNum++;
+                    gp.playSFX(2);
                     gp.obj[i] = null;
                     if(gemNum>=levelUpReq){
                         levelUpReq += levelUpReq*1.25 + 2;

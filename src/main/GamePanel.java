@@ -34,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable {
     // System
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
+    Sound sound = new Sound();
+    Sound sfx = new Sound();
     Thread gameThread; // handles the game loop
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
@@ -55,6 +57,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int gameOverState = 3;
     public final int gameWonState = 4;
 
+    // Flags
+
+    public boolean musicPlaying;
+
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -67,6 +73,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         aSetter.setObject();
+        playMusic(0);
+        musicPlaying = true;
         gameState = titleState;
     }
 
@@ -106,6 +114,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == playState) {
             // Player
             player.update();
+
+            // Music
+            if (sound.currentSong == 0) {
+                stopMusic();
+                playMusic(3);
+            }
 
             //test spawn 1 group of enemies
             if(testSpawn == 0){
@@ -169,5 +183,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         g2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSFX(int i) {
+        sfx.setFile(i);
+        sfx.play();
     }
 }
