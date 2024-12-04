@@ -14,6 +14,7 @@ public class SuperObject {
     public Rectangle solidArea = new Rectangle(0, 0, 20, 20);
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     UtilityTool uTool = new UtilityTool();
 
 

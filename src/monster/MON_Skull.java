@@ -3,6 +3,7 @@ package monster;
 import entity.Entity;
 import main.GamePanel;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.security.SecureRandom;
 
@@ -13,6 +14,9 @@ public class MON_Skull extends Entity {
 
     //String state = "peaceful";
 
+    boolean invincible = false;
+    int invincibleCounter = 0;
+
 
     public MON_Skull(GamePanel gp) {
         super(gp);
@@ -20,7 +24,7 @@ public class MON_Skull extends Entity {
         type = 1;
         name = "Skull";
         speed = 1;
-        maxLife = 4;
+        maxLife = 2;
         life = maxLife;
         direction = "down";
 
@@ -71,6 +75,26 @@ public class MON_Skull extends Entity {
         gp.cChecker.checkEntity(this, gp.enemy);*/
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
+        solidArea.x = worldX;
+        solidArea.y = worldY;
+        //System.out.println("mon " + this.solidArea.x + " " + this.solidArea.y);
+        if (this.solidArea.intersects(gp.wep1.solidArea)){
+            if(invincible == false) {
+                life -= gp.wep1.damage;
+                System.out.println("hit");
+                invincible = true;
+            }
+
+        }
+
+        if(invincible == true) {
+            invincibleCounter++;
+            if(invincibleCounter == 30) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
+
         if(this.type == 1 && contactPlayer){
 
             if (gp.player.life <= 0) {
@@ -116,6 +140,83 @@ public class MON_Skull extends Entity {
         }
     }
 
+    @Override
+    public void draw(Graphics2D g2) {
+
+        BufferedImage image = null;
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+
+            switch(direction) {
+                case "up":
+
+                    if (spriteNum == 1) {
+                        image = up1;
+                    }
+
+                    if (spriteNum == 2) {
+                        image = up2;
+                    }
+
+                    if (spriteNum == 3) {
+                        image = up_idle;
+                    }
+
+                    break;
+                case "down":
+
+                    if (spriteNum == 1) {
+                        image = down1;
+                    }
+
+                    if (spriteNum == 2) {
+                        image = down2;
+                    }
+
+                    if (spriteNum == 3) {
+                        image = down_idle;
+                    }
+
+                    break;
+                case "left":
+
+                    if (spriteNum == 1) {
+                        image = left1;
+                    }
+
+                    if (spriteNum == 2) {
+                        image = left2;
+                    }
+
+                    break;
+                case "right":
+
+                    if (spriteNum == 1) {
+                        image = right1;
+                    }
+
+                    if (spriteNum == 2) {
+                        image = right2;
+                    }
+
+                    break;
+            }
+
+            if(invincible){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            }
+
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            //reset transparency for anything else drawn
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        }
+    }
     public void setAction() {
 
         /**actionLockCounter ++;

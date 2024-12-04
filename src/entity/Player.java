@@ -150,6 +150,8 @@ public class Player extends Entity {
                 iFrames = 0;
             }
         }
+
+        //System.out.println("player: " + worldX + " " + worldY);
     }
 
     //damage from monsters

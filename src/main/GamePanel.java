@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import entity.Player;
+import entity.spin_weapon;
 import object.SuperObject;
 import tiles.TileManager;
 import entity.Entity;
@@ -44,9 +45,11 @@ public class GamePanel extends JPanel implements Runnable {
     // Objects
     public SuperObject[] obj = new SuperObject[10];
 
+
     // Entities
     public Player player = new Player(this, keyH);
     public Entity[] enemy = new Entity[1000];
+    public spin_weapon wep1 = new spin_weapon(this);
     int testSpawn = 0;
 
     // Game State
@@ -72,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        aSetter.setWeapon();
         aSetter.setObject();
         playMusic(0);
         musicPlaying = true;
@@ -123,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //test spawn 1 group of enemies
             if(testSpawn == 0){
-                aSetter.spawnGroupTest(20);
+                aSetter.spawnGroupTest(2);
                 testSpawn++;
             }
 
@@ -131,6 +135,9 @@ public class GamePanel extends JPanel implements Runnable {
             for (int i = 0; i < enemy.length; i++) {
                 if (enemy[i] != null) {
                     enemy[i].update();
+                    if (enemy[i].life <= 0){
+                        enemy[i] = null;
+                    }
                 }
             }
         }
@@ -174,6 +181,8 @@ public class GamePanel extends JPanel implements Runnable {
                     enemy[i].draw(g2);
                 }
             }
+
+            wep1.draw(g2);
 
             // Players
             player.draw(g2);

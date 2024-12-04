@@ -2,6 +2,7 @@ package main;
 
 import monster.MON_Skull;
 import object.OBJ_Gem;
+
 import java.security.SecureRandom;
 
 public class AssetSetter {
@@ -20,15 +21,22 @@ public class AssetSetter {
     }
 
     //objects
-    public void setObject(){
+    public void setObject() {
         gp.obj[0] = new OBJ_Gem(gp);
-        gp.obj[0].worldX =  20 * gp.tileSize;
-        gp.obj[0].worldY =  9 * gp.tileSize;
+        gp.obj[0].worldX = 20 * gp.tileSize;
+        gp.obj[0].worldY = 9 * gp.tileSize;
 
         gp.obj[1] = new OBJ_Gem(gp);
-        gp.obj[1].worldX =  30 * gp.tileSize;
-        gp.obj[1].worldY =  3 * gp.tileSize;
+        gp.obj[1].worldX = 30 * gp.tileSize;
+        gp.obj[1].worldY = 3 * gp.tileSize;
+
     }
+
+    public void setWeapon(){
+        gp.wep1.worldX =  gp.player.worldX - (2 * gp.tileSize);
+        gp.wep1.worldY = gp.player.worldY;
+    }
+
 
     //enemies
     public void setMonster(int index, int x, int y) {
