@@ -81,7 +81,8 @@ public class MON_Skull extends Entity {
         if (this.solidArea.intersects(gp.wep1.solidArea)){
             if(invincible == false) {
                 life -= gp.wep1.damage;
-                System.out.println("hit");
+                gp.playSFX(1);
+                //System.out.println("hit");
                 invincible = true;
             }
 

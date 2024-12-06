@@ -41,8 +41,8 @@ public class spin_weapon extends Entity {
         int centerX = gp.player.worldX + gp.tileSize /2;
         int centerY = gp.player.worldY + gp.tileSize /2;
         double distance = gp.tileSize *3;
-        int drawX = (int) (gp.player.screenX + distance * Math.cos(angle) - gp.tileSize);
-        int drawY = (int) (gp.player.screenY + distance * Math.sin(angle) - gp.tileSize);
+        int drawX = (int) (gp.player.screenX - distance * Math.cos(angle) - gp.tileSize);
+        int drawY = (int) (gp.player.screenY - distance * Math.sin(angle) - gp.tileSize);
 
         g2d.rotate(angle, gp.player.screenX, gp.player.screenY);
         angle += 0.02;
