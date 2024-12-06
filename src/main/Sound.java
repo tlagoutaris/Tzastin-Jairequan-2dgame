@@ -20,8 +20,8 @@ public class Sound {
         soundURL[1] = setup("playerHurt");
         soundURL[2] = setup("pickupItem");
         soundURL[3] = setup("inGame");
-        soundURL[4] = setup("win");
-        soundURL[5] = setup("gameOver");
+        soundURL[4] = setup("winScreen");
+        soundURL[5] = setup("gameOverScreen");
     }
 
     public void setFile(int i) {
