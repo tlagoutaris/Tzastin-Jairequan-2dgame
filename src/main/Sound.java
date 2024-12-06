@@ -20,12 +20,15 @@ public class Sound {
         soundURL[1] = setup("playerHurt");
         soundURL[2] = setup("pickupItem");
         soundURL[3] = setup("inGame");
+        soundURL[4] = setup("win");
+        soundURL[5] = setup("gameOver");
     }
 
     public void setFile(int i) {
 
         if (currentSong == i && clip != null && clip.isActive()) {
-            return;
+            clip.stop();
+            clip.close();
         }
 
         setSong(i);
@@ -56,7 +59,10 @@ public class Sound {
     }
 
     public void stop() {
-        clip.stop();
+        if (clip != null) {
+            clip.stop();
+            clip.close();
+        }
     }
 
     public URL setup(String path) {

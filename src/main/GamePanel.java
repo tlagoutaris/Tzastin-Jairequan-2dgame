@@ -120,14 +120,11 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
 
             // Music
-            if (sound.currentSong == 0) {
-                stopMusic();
-                playMusic(3);
-            }
+            playMusic(3);
 
             //test spawn 1 group of enemies
             if(testSpawn == 0){
-                aSetter.spawnGroupTest(2);
+                aSetter.spawnGroupTest(15);
                 testSpawn++;
             }
 
@@ -143,11 +140,17 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (gameState == gameOverState) {
-            // nothing
+
+            // Music
+            playMusic(5);
+
         }
 
         if (gameState == gameWonState) {
-            // nothing
+
+            // Music
+            playMusic(4);
+
         }
 
         if (gameState == pauseState) {
@@ -194,14 +197,13 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
-    public void playMusic(int i) {
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
-    }
-
-    public void stopMusic() {
-        sound.stop();
+    public void playMusic(int newSong) {
+        if (sound.getCurrentSong() != newSong) {
+            sound.stop();
+            sound.setFile(newSong);
+            sound.play();
+            sound.loop();
+        }
     }
 
     public void playSFX(int i) {
