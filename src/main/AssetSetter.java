@@ -28,7 +28,7 @@ public class AssetSetter {
 
         gp.obj[1] = new OBJ_Gem(gp);
         gp.obj[1].worldX = 30 * gp.tileSize;
-        gp.obj[1].worldY = 3 * gp.tileSize;
+        gp.obj[1].worldY = 9 * gp.tileSize;
 
     }
 

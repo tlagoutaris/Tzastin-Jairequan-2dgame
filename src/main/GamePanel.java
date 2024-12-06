@@ -124,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             //test spawn 1 group of enemies
             if(testSpawn == 0){
-                aSetter.spawnGroupTest(15);
+                aSetter.spawnGroupTest(5);
                 testSpawn++;
             }
 
