@@ -50,7 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public Entity[] enemy = new Entity[1000];
     public spin_weapon wep1 = new spin_weapon(this);
-    int testSpawn = 0;
+    int mobNumber = 2;
+    int mobSpawnTime = 0;
 
     // Game State
     public int gameState;
@@ -123,9 +124,10 @@ public class GamePanel extends JPanel implements Runnable {
             playMusic(3);
 
             //test spawn 1 group of enemies
-            if(testSpawn == 0){
-                aSetter.spawnGroupTest(5);
-                testSpawn++;
+            if(ui.playTime >= mobSpawnTime){
+                aSetter.spawnGroupTest(mobNumber);
+                mobNumber++;
+                mobSpawnTime = (int)ui.playTime + 10;
             }
 
             // Enemy

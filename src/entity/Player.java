@@ -76,6 +76,10 @@ public class Player extends Entity {
 
         boolean moving = keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed;
 
+        // Check enemy collision
+        int enemyIndex = gp.cChecker.checkEntity(this, gp.enemy);
+        contactMonster(enemyIndex);
+
         if (moving) {
 
             if (spriteNum == 3) {
@@ -96,10 +100,6 @@ public class Player extends Entity {
             // Check tile collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
-
-            // Check enemy collision
-            int enemyIndex = gp.cChecker.checkEntity(this, gp.enemy);
-            contactMonster(enemyIndex);
 
             // If collision is false, player can move
             if (!collisionOn) {

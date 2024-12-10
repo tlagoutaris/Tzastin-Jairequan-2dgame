@@ -44,17 +44,17 @@ public class spin_weapon extends Entity {
         int drawX = (int) (gp.player.screenX - distance * Math.cos(angle) - gp.tileSize);
         int drawY = (int) (gp.player.screenY - distance * Math.sin(angle) - gp.tileSize);
 
-        g2d.rotate(angle, gp.player.screenX, gp.player.screenY);
+        //g2d.rotate(angle, gp.player.screenX, gp.player.screenY);
         angle += 0.02;
 
         g2d.drawImage(image, drawX, drawY, gp.tileSize, gp.tileSize, null);
         g2d.dispose();
 
-        worldX = (int) (centerX + distance * Math.cos(angle) - gp.tileSize);
-        worldY = (int) (centerY + distance * Math.sin(angle) - gp.tileSize);
+        worldX = (int) (centerX - distance * Math.cos(angle) - gp.tileSize);
+        worldY = (int) (centerY - distance * Math.sin(angle) - gp.tileSize);
 
-        solidArea.x = worldX + (gp.tileSize  - solidArea.width) /2;
-        solidArea.y = worldY + (gp.tileSize  - solidArea.height) /2 ;
+        solidArea.x = worldX - (gp.tileSize  - solidArea.width)/2;
+        solidArea.y = worldY - (gp.tileSize  - solidArea.height/2);
         //System.out.println(attackArea.x + " " + attackArea.y);
 
     }

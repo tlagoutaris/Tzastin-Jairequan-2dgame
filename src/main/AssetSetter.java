@@ -69,7 +69,7 @@ public class AssetSetter {
         int horizontal; //0 for left of player, 1 for right
         int vertical;   //0 for above player, 1 for below
 
-        for (int i = 0; i < spawning; i++) {
+        for (int i = currentIndex; i < currentIndex + spawning; i++) {
             horizontal = r.nextInt(0, 2);
             vertical = r.nextInt(0, 2);
 
@@ -88,6 +88,7 @@ public class AssetSetter {
             }
 
             setMonster(i, x, y);
+            i++;
         }
     }
 }
