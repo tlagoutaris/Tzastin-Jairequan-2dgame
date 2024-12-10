@@ -17,7 +17,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     public int gemNum = 0;
-    public int levelUpReq;
+    public int levelUpReq = 3;
     public boolean invincible;
     public int iFrames = 0;
 
@@ -174,12 +174,13 @@ public class Player extends Entity {
                     gp.playSFX(2);
                     gp.obj[i] = null;
                     if(gemNum>=levelUpReq){
-                        levelUpReq += levelUpReq*1.25 + 2;
+                        levelUpReq = levelUpReq*2;
                         gp.ui.showMessage("LEVEL UP!");
+                        gp.wep1.damage += 1;
                     }
 
                     //test to end game
-                    if(gemNum == 2){
+                    if(gemNum == 10){
                         gp.gameState = gp.gameWonState;
                     }
                     break;

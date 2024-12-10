@@ -21,15 +21,10 @@ public class AssetSetter {
     }
 
     //objects
-    public void setObject() {
-        gp.obj[0] = new OBJ_Gem(gp);
-        gp.obj[0].worldX = 20 * gp.tileSize;
-        gp.obj[0].worldY = 9 * gp.tileSize;
-
-        gp.obj[1] = new OBJ_Gem(gp);
-        gp.obj[1].worldX = 30 * gp.tileSize;
-        gp.obj[1].worldY = 9 * gp.tileSize;
-
+    public void setGem(int currentIndex, int x, int y) {
+        gp.obj[currentIndex] = new OBJ_Gem(gp);
+        gp.obj[currentIndex].worldX = x;
+        gp.obj[currentIndex].worldY = y;
     }
 
     public void setWeapon(){

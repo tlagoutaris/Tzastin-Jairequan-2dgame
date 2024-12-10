@@ -43,7 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
 
     // Objects
-    public SuperObject[] obj = new SuperObject[10];
+    public SuperObject[] obj = new SuperObject[100];
+    int gemIndex = 0;
 
 
     // Entities
@@ -77,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         aSetter.setWeapon();
-        aSetter.setObject();
         playMusic(0);
         musicPlaying = true;
         gameState = titleState;
@@ -135,6 +135,8 @@ public class GamePanel extends JPanel implements Runnable {
                 if (enemy[i] != null) {
                     enemy[i].update();
                     if (enemy[i].life <= 0){
+                        aSetter.setGem(gemIndex, enemy[i].worldX, enemy[i].worldY);
+                        gemIndex++;
                         enemy[i] = null;
                     }
                 }
