@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import entity.Player;
 import entity.spin_weapon;
 import object.SuperObject;
@@ -29,6 +32,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
+    // Thread
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(4);
+
     // FPS
     int FPS = 60;
 
@@ -49,9 +55,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Entities
     public Player player = new Player(this, keyH);
-    public Entity[] enemy = new Entity[1000];
+    public Entity[] enemy = new Entity[100];
     public spin_weapon wep1 = new spin_weapon(this);
-    int mobNumber = 2;
+    int mobNumber = 1;
     int mobSpawnTime = 0;
 
     // Game State
@@ -127,6 +133,9 @@ public class GamePanel extends JPanel implements Runnable {
             if(ui.playTime >= mobSpawnTime){
                 aSetter.spawnGroupTest(mobNumber);
                 mobNumber++;
+                if (mobNumber >= 4) {
+                    mobNumber = 3;
+                }
                 mobSpawnTime = (int)ui.playTime + 10;
             }
 
@@ -135,7 +144,12 @@ public class GamePanel extends JPanel implements Runnable {
                 if (enemy[i] != null) {
                     enemy[i].update();
                     if (enemy[i].life <= 0){
-                        aSetter.setGem(gemIndex, enemy[i].worldX, enemy[i].worldY);
+                        final int gemX = enemy[i].worldX;
+                        final int gemY = enemy[i].worldY;
+
+                        threadPool.execute(() -> {
+                            aSetter.setGem(gemIndex++, gemX, gemY);
+                        });
                         gemIndex++;
                         enemy[i] = null;
                     }
