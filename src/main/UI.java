@@ -22,7 +22,7 @@ public class UI {
     double playTime = 0;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
     public int commandNum = 0;
-    public int maxCommandNum = 2;
+    public int maxCommandNum = 1;
 
     // Dimensions of UI overlay
 
@@ -155,7 +155,7 @@ public class UI {
 
         // Title name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 66F));
-        String text = "Game: The Game";
+        String text = "2dgame";
         int x = getXforCenteredText(text);
         int y = gp.tileSize * 3;
 
@@ -165,7 +165,7 @@ public class UI {
         // Options Menu
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
 
-        text = "New Game";
+        text = "Start";
         x = getXforCenteredText(text);
         y += (gp.tileSize * 4);
         g2.drawString(text, x, y);
@@ -173,19 +173,11 @@ public class UI {
             g2.drawString(">", x - gp.tileSize, y);
         }
 
-        text = "Load Game";
-        x = getXforCenteredText(text);
-        y += (gp.tileSize * 2);
-        g2.drawString(text, x, y);
-        if (commandNum == 1) {
-            g2.drawString(">", x - gp.tileSize, y);
-        }
-
         text = "Quit";
         x = getXforCenteredText(text);
         y += (gp.tileSize * 2);
         g2.drawString(text, x, y);
-        if (commandNum == 2) {
+        if (commandNum == 1) {
             g2.drawString(">", x - gp.tileSize, y);
         }
     }
